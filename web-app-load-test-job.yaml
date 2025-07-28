@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: web-app-load-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: hey
+        image: yokogawa/hey:latest
+        command: ["hey", "-n", "100", "-c", "10", "http://web-app-service/"]
+      restartPolicy: Never
+  backoffLimit: 1
