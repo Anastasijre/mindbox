@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: web-app-periodic-check
+spec:
+  schedule: "*/5 * * * *"  # Каждые 5 минут
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: curl
+            image: curlimages/curl:latest
+            command: ["curl", "--fail", "http://web-app-service/health"]
+          restartPolicy: OnFailure
