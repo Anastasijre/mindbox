@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: web-app-check
+spec:
+  template:
+    spec:
+      containers:
+      - name: curl
+        image: curlimages/curl:latest
+        command: ["curl", "--fail", "http://web-app-service/health"]
+      restartPolicy: Never
+  backoffLimit: 3  # Количество попыток при неудаче
