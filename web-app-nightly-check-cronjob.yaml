@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: web-app-nightly-check
+spec:
+  schedule: "0 2 * * *"  # Каждый день в 2:00
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: curl
+            image: curlimages/curl:latest
+            command: ["curl", "--fail", "http://web-app-service/health"]
+          restartPolicy: OnFailure
